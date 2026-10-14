@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="تابع حالة جهازك وموعد الاستلام من مركز الصيانة.">
+  <title>متابعة الصيانة</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#" aria-label="الرئيسية"><span class="brand-mark">W</span><span><strong id="headerStoreName">مركز الصيانة</strong><small>متابعة حالة جهازك</small></span></a>
+  <button id="adminOpenBtn" class="top-admin" type="button">دخول الإدارة</button>
+</header>
+<main class="container">
+  <section class="hero">
+    <div class="hero-copy"><span class="eyebrow">بوابة متابعة الأجهزة</span><h1>تابع حالة جهازك<br>بكل سهولة.</h1><p>أدخل كود المتابعة الموجود في إيصال الصيانة لمعرفة آخر تحديث وموعد الاستلام التقريبي.</p></div>
+    <div class="hero-art" aria-hidden="true"><div class="ring"></div><div class="phone">▯<span>✓</span></div><i class="spark s1">✦</i><i class="spark s2">✧</i></div>
+  </section>
+
+  <section class="card lookup" id="lookupPanel">
+    <div class="section-heading"><span class="icon-box">⌕</span><div><h2>متابعة حالة الجهاز</h2><p>اكتب كود المتابعة الموجود في الإيصال</p></div></div>
+    <form id="lookupForm">
+      <label for="lookupCode">كود المتابعة</label>
+      <div class="input-row"><input id="lookupCode" autocomplete="off" inputmode="text" placeholder="مثال: 58790214" required maxlength="24"><button class="primary" type="submit">عرض الحالة <span>←</span></button></div>
+      <p class="hint">إذا لم يكن الكود متوفراً لديك، تواصل مع خدمة العملاء.</p>
+    </form>
+    <div id="lookupMessage" class="message" aria-live="polite"></div>
+    <div id="deviceResult" class="result hidden"></div>
+  </section>
+
+  <section id="adminLoginPanel" class="card login-card hidden">
+    <div class="admin-head"><div><span class="eyebrow">منطقة خاصة</span><h2>تسجيل دخول الإدارة</h2><p>هذه المنطقة مخصصة لموظفي المركز المصرح لهم.</p></div><button id="closeLoginBtn" class="icon-button" type="button" aria-label="إغلاق">×</button></div>
+    <form id="loginForm">
+      <label for="adminEmail">البريد الإلكتروني</label><input id="adminEmail" type="email" autocomplete="username" required placeholder="admin@example.com">
+      <label for="adminPassword">كلمة المرور</label><input id="adminPassword" type="password" autocomplete="current-password" required placeholder="أدخل كلمة المرور">
+      <button class="primary full" type="submit" id="loginBtn">تسجيل الدخول</button>
+    </form>
+    <div id="loginMessage" class="message" aria-live="polite"></div>
+  </section>
+
+  <section id="adminPanel" class="admin hidden">
+    <div class="admin-head"><div><span class="eyebrow">إدارة المركز</span><h2>لوحة التحكم</h2><p>إدارة الأجهزة وإعدادات بيانات المركز.</p></div><button id="logoutBtn" class="ghost" type="button">تسجيل الخروج</button></div>
+    <div class="tabs" role="tablist"><button class="tab active" data-tab="devicesTab" type="button">الأجهزة</button><button class="tab" data-tab="settingsTab" type="button">الإعدادات</button></div>
+    <div id="devicesTab" class="tab-panel">
+      <div class="stats"><div class="stat"><span>إجمالي الأجهزة</span><strong id="statTotal">0</strong></div><div class="stat"><span>قيد الصيانة</span><strong id="statWorking">0</strong></div><div class="stat"><span>جاهز للاستلام</span><strong id="statReady">0</strong></div></div>
+      <div class="admin-grid">
+        <form id="deviceForm" class="card editor">
+          <div class="section-heading"><span class="icon-box">＋</span><div><h3 id="formTitle">إضافة جهاز جديد</h3><p>ينشأ كود متابعة فريد تلقائياً</p></div></div>
+          <input type="hidden" id="editId">
+          <label for="deviceName">اسم الجهاز</label><input id="deviceName" required maxlength="100" placeholder="مثال: iPhone 13">
+          <label for="deviceType">نوع الجهاز / الموديل</label><input id="deviceType" maxlength="100" placeholder="مثال: هاتف محمول">
+          <label for="fault">نوع العطل</label><input id="fault" required maxlength="200" placeholder="مثال: كسر الشاشة">
+          <div class="two-col"><div><label for="status">الحالة</label><select id="status"><option>قيد الانتظار</option><option>جاري التجهيز</option><option>جاهز للاستلام</option><option>تم استلامه</option><option>ملغي</option></select></div><div><label for="dueDate">موعد الاستلام التقريبي</label><input id="dueDate" type="date"></div></div>
+          <label for="workDone">وصف ما تم إنجازه</label><textarea id="workDone" rows="3" maxlength="1500" placeholder="اكتب آخر تحديث للعميل..."></textarea>
+          <div class="form-actions"><button class="primary" type="submit" id="saveBtn">حفظ الجهاز</button><button class="ghost hidden" type="button" id="cancelEdit">إلغاء التعديل</button></div>
+          <div id="formMessage" class="message" aria-live="polite"></div>
+        </form>
+        <section class="card devices-card"><div class="list-head"><div><h3>الأجهزة المسجلة</h3><p>البيانات محفوظة في قاعدة البيانات المشتركة</p></div><span id="deviceCount" class="count">0 جهاز</span></div>
+          <div class="search-wrap"><span>⌕</span><input id="adminSearch" placeholder="بحث بالكود أو اسم الجهاز..."></div><div id="devicesList" class="devices-list"><div class="empty">سجّل الدخول لتحميل الأجهزة.</div></div>
+        </section>
+      </div>
+    </div>
+    <div id="settingsTab" class="tab-panel hidden">
+      <form id="settingsForm" class="card settings-card">
+        <div class="section-heading"><span class="icon-box">⚙</span><div><h3>إعدادات المركز</h3><p>تظهر هذه البيانات للعملاء في الموقع.</p></div></div>
+        <label for="storeName">اسم المتجر / مركز الصيانة</label><input id="storeName" required maxlength="120" placeholder="مثال: مركز النخبة لصيانة الهواتف">
+        <label for="whatsapp">رقم واتساب خدمة العملاء</label><input id="whatsapp" required inputmode="tel" maxlength="25" placeholder="مثال: 218927772012">
+        <p class="hint">اكتب الرقم مع مفتاح الدولة، من دون علامة + أو مسافات، مثال ليبيا: 2189XXXXXXXX.</p>
+        <button class="primary" type="submit" id="settingsSaveBtn">حفظ الإعدادات</button><div id="settingsMessage" class="message" aria-live="polite"></div>
+      </form>
+    </div>
+    <p class="security-note">تُحمى عمليات الإدارة بواسطة تسجيل الدخول وسياسات قاعدة البيانات. لا تشارك حساب الإدارة مع العملاء.</p>
+  </section>
+  <footer><span>© <span id="year"></span> <span id="footerStoreName">مركز الصيانة</span></span><a id="supportLink" href="#" target="_blank" rel="noopener" class="support-link hidden">تواصل مع خدمة العملاء عبر واتساب</a></footer>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
